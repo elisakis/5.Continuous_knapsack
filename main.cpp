@@ -4,12 +4,12 @@ using namespace std;
 
 int Continuous_knapsack(int W, int n)
 {
-    double W1, price1, eff1;  //объём предмета, цена предмета, эффективность предмета (цена единицы объема)
-    double price_all, W_all;  //цена и объем предметов в рюкзаке
-    double arr_W[n], arr_price[n], arr_eff[n];    //массивы объёмов, цен и эффективности
-    int arr_sort[n];  //массив с порядком сортировки
+    double W1, price1, eff1;  //РѕР±СЉС‘Рј РїСЂРµРґРјРµС‚Р°, С†РµРЅР° РїСЂРµРґРјРµС‚Р°, СЌС„С„РµРєС‚РёРІРЅРѕСЃС‚СЊ РїСЂРµРґРјРµС‚Р° (С†РµРЅР° РµРґРёРЅРёС†С‹ РѕР±СЉРµРјР°)
+    double price_all, W_all;  //С†РµРЅР° Рё РѕР±СЉРµРј РїСЂРµРґРјРµС‚РѕРІ РІ СЂСЋРєР·Р°РєРµ
+    double arr_W[n], arr_price[n], arr_eff[n];    //РјР°СЃСЃРёРІС‹ РѕР±СЉС‘РјРѕРІ, С†РµРЅ Рё СЌС„С„РµРєС‚РёРІРЅРѕСЃС‚Рё
+    int arr_sort[n];  //РјР°СЃСЃРёРІ СЃ РїРѕСЂСЏРґРєРѕРј СЃРѕСЂС‚РёСЂРѕРІРєРё
     double arr_temp[n];
-    double part1;  //часть предмета
+    double part1;  //С‡Р°СЃС‚СЊ РїСЂРµРґРјРµС‚Р°
 
     for (int i = 0; i < n; i++)
     {
@@ -19,15 +19,15 @@ int Continuous_knapsack(int W, int n)
         arr_price[i] = price1;
         arr_eff[i] = eff1;
 
-        //сортировка вставкой
+        //СЃРѕСЂС‚РёСЂРѕРІРєР° РІСЃС‚Р°РІРєРѕР№
         int j;
-        for (j = i - 1; j >= 0 && arr_temp[j] < eff1; j--)  // поиск места элемента в готовой последовательности
+        for (j = i - 1; j >= 0 && arr_temp[j] < eff1; j--)  // РїРѕРёСЃРє РјРµСЃС‚Р° СЌР»РµРјРµРЅС‚Р° РІ РіРѕС‚РѕРІРѕР№ РїРѕСЃР»РµРґРѕРІР°С‚РµР»СЊРЅРѕСЃС‚Рё
         {
-            arr_temp[j+1] = arr_temp[j];  // сдвигаем элемент направо, пока не дошли
+            arr_temp[j+1] = arr_temp[j];  // СЃРґРІРёРіР°РµРј СЌР»РµРјРµРЅС‚ РЅР°РїСЂР°РІРѕ, РїРѕРєР° РЅРµ РґРѕС€Р»Рё
             arr_sort[j+1] = arr_sort[j];
         }
 
-        arr_temp[j + 1] = eff1; // место найдено, вставить элемент (или i == 0)
+        arr_temp[j + 1] = eff1; // РјРµСЃС‚Рѕ РЅР°Р№РґРµРЅРѕ, РІСЃС‚Р°РІРёС‚СЊ СЌР»РµРјРµРЅС‚ (РёР»Рё i == 0)
         arr_sort[j + 1] = i;
     }
 
@@ -40,14 +40,14 @@ int Continuous_knapsack(int W, int n)
         {
             price_all += arr_price[arr_sort[i]];
             W_all += arr_W[arr_sort[i]];
-            arr_temp[arr_sort[i]] = 1.0;  //запомним долю предмета
+            arr_temp[arr_sort[i]] = 1.0;  //Р·Р°РїРѕРјРЅРёРј РґРѕР»СЋ РїСЂРµРґРјРµС‚Р°
         }
         else
         {
             part1 = (W - W_all) / arr_W[arr_sort[i]];
             price_all += part1 * arr_price[arr_sort[i]];
             W_all += part1 * arr_W[arr_sort[i]];
-            arr_temp[arr_sort[i]] = part1;  //запомним долю предмета
+            arr_temp[arr_sort[i]] = part1;  //Р·Р°РїРѕРјРЅРёРј РґРѕР»СЋ РїСЂРµРґРјРµС‚Р°
         }
     }
 
@@ -62,7 +62,7 @@ int Continuous_knapsack(int W, int n)
 
 int main()
 {
-    int W, n;  //объём рюкзака и число предметов
+    int W, n;  //РѕР±СЉС‘Рј СЂСЋРєР·Р°РєР° Рё С‡РёСЃР»Рѕ РїСЂРµРґРјРµС‚РѕРІ
     cin >> W >> n;
 
     cout << Continuous_knapsack(W, n) << endl;
